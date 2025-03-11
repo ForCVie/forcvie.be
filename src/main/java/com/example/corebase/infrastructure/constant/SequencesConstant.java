@@ -7,10 +7,8 @@ public enum SequencesConstant {
     CPS_MENU_MNG("MENU", "CMM"),
     SYS_ROLE_MNG("sys_role", "RL"),
     MENU_ROLE("menu_role", "MR"),
-    CPS_MODULE_MNG("CPS_MODULE_MNG", "CMD"),
-    CPS_PERMISSION("CPS_PERMISSION", "CPM"),
-    CPS_API_MENU_PERMISSION("CPS_API_MENU_PERMISSION", "CAMP"),
     BANNER("banner", "BAN"),
+    NOTICE("notice", "NO"),
     TABLE_THREE("TBL_THREE", "T3");
 
     private final String tableName;

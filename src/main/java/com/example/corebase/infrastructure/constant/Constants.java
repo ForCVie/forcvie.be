@@ -26,4 +26,6 @@ public class Constants {
     public static final String Q_A_STATUS_QUESTION = "QUESTION";
     public static final String Q_A_STATUS_ANSWER = "ANSWER";
     public static final String Q_A_STATUS_REJECT = "REJECT";
+    public static final String NOTICE_TOP = "10511";
+    public static final String NOTICE_DOWN = "10512";
 }
