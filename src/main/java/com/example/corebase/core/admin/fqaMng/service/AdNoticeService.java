@@ -14,6 +14,8 @@ public interface AdNoticeService {
 
     Boolean saveData(AdNoticeReq req);
 
+    Boolean removeData(String id);
+
     Boolean setNoticeUp(String id);
 
     Boolean setNoticeDown(String id);

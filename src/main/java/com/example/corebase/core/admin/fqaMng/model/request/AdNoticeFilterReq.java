@@ -17,4 +17,6 @@ public class AdNoticeFilterReq extends PageableRequest {
     private String postCd;
 
     private String topFixCd;
+
+    private String roleId;
 }

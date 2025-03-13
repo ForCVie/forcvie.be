@@ -22,4 +22,6 @@ public class AdNoticeReq {
     private String topFixCd;
 
     private Integer readCnt;
+
+    private String roleId;
 }

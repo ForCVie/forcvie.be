@@ -31,4 +31,6 @@ public class NoticeEntity extends AuditEntity implements Serializable {
     private String topFixCd;
 
     private Integer readCnt;
+
+    private String roleId;
 }

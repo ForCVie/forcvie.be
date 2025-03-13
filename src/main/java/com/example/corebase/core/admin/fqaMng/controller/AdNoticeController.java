@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/a/notice")
+@RequestMapping("/a/fqa/notice")
 public class AdNoticeController {
 
     @Autowired
@@ -48,6 +48,17 @@ public class AdNoticeController {
     @PostMapping("/save")
     public ResponseObject saveData(@RequestBody AdNoticeReq req) {
         return new ResponseObject(service.saveData(req));
+    }
+
+    /**
+     * Save Notice
+     * @api /a/notice/remove
+     * @param req
+     * @return
+     */
+    @PostMapping("/remove")
+    public ResponseObject removeData(@RequestBody String req) {
+        return new ResponseObject(service.removeData(req));
     }
 
     /**

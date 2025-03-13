@@ -66,6 +66,15 @@ public class AdNoticeServiceImpl implements AdNoticeService {
     }
 
     @Override
+    public Boolean removeData(String id) {
+        NoticeEntity entity = repository.findById(id)
+                .orElseThrow(() -> new BadRequestCustomException(languageCommon.getMessageProperties("message.notfound")));
+        entity.setDelYn(Constants.STATE_Y);
+        repository.save(entity);
+        return true;
+    }
+
+    @Override
     public Boolean setNoticeUp(String id) {
         NoticeEntity entity = repository.findById(id)
                 .orElseThrow(() -> new BadRequestCustomException(languageCommon.getMessageProperties("message.notfound")));

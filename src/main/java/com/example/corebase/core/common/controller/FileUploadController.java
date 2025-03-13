@@ -1,115 +1,201 @@
 package com.example.corebase.core.common.controller;
 
+import com.example.corebase.core.base.model.ResponseObject;
 import com.example.corebase.core.common.service.FileMngService;
 import com.example.corebase.core.common.service.FileUploadService;
 import com.example.corebase.core.common.service.dto.FileMngDto;
 import com.example.corebase.core.common.service.dto.FileUploadedInfoDto;
+import com.example.corebase.infrastructure.exception.BadRequestCustomException;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping (value = {"/cmm/files"})
 @RequiredArgsConstructor
-public class FileUploadController {
+public class FileMngController {
 
-    private final FileUploadService fileUploadService;
+    // List ALLOWED EXTENSIONS of file
+    private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".hwp", ".hwpx", ".doc", ".docx", ".xls",
+            ".xlsx", ".ppt", ".pptx", ".txt", ".pdf", ".zip", ".jpg", ".png", ".jpeg", ".avi" , ".flv" , ".mkv" , ".mov" , ".mpeg",
+            ".mp4" , ".ogg", ".wma", ".wmv");
+
     private final FileMngService fileMngService;
 
-    /**
-     * 
-     * @param files
-     * @param category
-     * @param orgName
-     * @param sectionName
-     * @param referKeyId
-     * @return
-     * @throws IOException
-     */
-    @PostMapping(value = "upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public List<FileMngDto> uploadFile(@RequestParam("files") MultipartFile files[], @RequestParam("category") String category,
-                                       @RequestParam("orgName") String orgName, @RequestParam("sectionName") String sectionName,
-                                       @RequestParam("referKeyId") String referKeyId) throws IOException {
-        if (files.length == 0) {
-            throw new BadRequestException("File is empty");
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    private Path fileStorageLocation;
+
+    private String getFileExtension(String filename) {
+        return filename.substring(filename.lastIndexOf("."));
+    }
+
+    @PostConstruct
+    public void init() {
+        this.fileStorageLocation = Paths.get(uploadPath).toAbsolutePath().normalize();
+        try {
+            Files.createDirectories(this.fileStorageLocation);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not create upload directory!", e);
         }
-        FileMngDto fileMngDto;
-        int fileSubId = 0;
+    }
+
+    /**
+     * Upload file
+     *
+     * @param files       .
+     * @param category    .
+     * @param orgName     .
+     * @param sectionName .
+     * @param referKeyId  .
+     * @return FileMngDto
+     * @throws IOException .
+     */
+    @PostMapping (value = "upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<List<FileMngDto>> uploadFile(@RequestParam ("files") MultipartFile[] files,
+                                                    @RequestParam ("category") String category, @RequestParam ("orgName") String orgName,
+                                                    @RequestParam ("sectionName") String sectionName, @RequestParam ("referKeyId") String referKeyId) throws
+            IOException {
+
+        if (files.length == 1 && files[ 0 ].getOriginalFilename().isEmpty()) {
+            throw new BadRequestCustomException(languageCommon.getMessageProperties("message.notfound"));
+        }
+
         List<FileMngDto> listFileMngDto = new ArrayList<FileMngDto>();
+        List<FileMngDto> fileRes = new ArrayList<FileMngDto>();
+
         for (MultipartFile file : files) {
-            fileSubId++;
-            fileMngDto = new FileMngDto();
-            fileMngDto = fileUploadService.uploadFile(file, category);
-            fileMngDto.setFimReferKeyId(Long.parseLong(referKeyId));
-            fileMngDto.setFimSectionName(sectionName);
-            fileMngDto.setFimFileOrgName(orgName);
-            fileMngDto.setFimSubFileId(fileSubId);
+
+            String fileExtension = getFileExtension(file.getOriginalFilename());
+            if (! ALLOWED_EXTENSIONS.contains(fileExtension.toLowerCase())) {
+                throw new BadRequestCustomException(languageCommon.getMessageProperties("message.notfound")));
+            }
+
+            FileMngDto fileMngDto = new FileMngDto();
+            fileMngDto = fileMngService.uploadFile(file, category, orgName, sectionName);
+            fileMngDto.setFimReferKeyId(referKeyId);
             listFileMngDto.add(fileMngDto);
+            fileRes = fileMngService.createNewFile(listFileMngDto);
         }
-        return fileMngService.createNewFile(listFileMngDto);
+
+        return new ApiResponse<>(ApiStatus.CREATED, fileRes);
     }
 
     /**
-     * 
-     * @param fileName
-     * @param uploadDirectory
-     * @return
-     * @throws IOException
+     * Upload file with editor
+     *
+     * @param file        .
+     * @param category    .
+     * @param orgName     .
+     * @param sectionName .
+     * @return FileUploadedInfoDto
+     * @throws IOException .
      */
-    @GetMapping("/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("fileName") String fileName,
-            @RequestParam("uploadDirectory") String uploadDirectory) throws IOException {
-        if (fileName.isEmpty()) {
-            throw new BadRequestException("File name is empty");
+    @PostMapping (value = "uploadEditer", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ApiResponse<FileUploadedInfoDto> uploadEditer(@RequestParam ("file") MultipartFile file,
+                                                         @RequestParam ("category") String category, @RequestParam ("orgName") String orgName,
+                                                         @RequestParam ("sectionName") String sectionName) throws IOException {
+
+        if (file == null) {
+            throw new BadRequestCustomException(ApiStatus.BAD_REQUEST_FILE_EMPTY);
         }
 
-        Resource file = fileUploadService.downloadFile(fileName, uploadDirectory);
+        FileMngDto fileMngDto = fileMngService.uploadFile(file, category, orgName, sectionName);
+        FileUploadedInfoDto fileUploadedInfoDto = fileMngService.createEditNewFile(fileMngDto);
+
+        return new ApiResponse<>(ApiStatus.CREATED, fileUploadedInfoDto);
+    }
+
+    /**
+     * Download single file
+     *
+     * @body SingleFileDTO .
+     * @return ResponseEntity<Resource> .
+     * @throws IOException .
+     */
+    @PostMapping ("/download")
+    public ResponseEntity<Resource> downloadFile(@RequestBody SingleFileDTO singleFileDTO) throws
+            IOException {
+
+        if (singleFileDTO.getEncodedFileName().isEmpty()) {
+            throw new BadRequestCustomException(ApiStatus.BAD_REQUEST_FILE_EMPTY);
+        }
+
+        Resource resource = fileMngService.prepareDownloadSingleFile(singleFileDTO.getEncodedFileName());
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .body(file);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .contentLength(resource.getFile().length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
     }
 
     /**
-     * 
-     * @param fimFileCategory
-     * @param fimFileOrgName
-     * @param fimSectionName
-     * @param fimReferKeyId
-     * @return
-     * @throws IOException
+     * Download multiple file
+     *
+     * @param multipleFileDTO .
+     * @return ResponseEntity<Resource>
      */
-    @GetMapping("/fileUploadedInfo")
-    public List<FileUploadedInfoDto> getFileUploadedInfo(@RequestParam(name = "fimFileCategory") String fimFileCategory,
-                                                         @RequestParam(name = "fimFileOrgName") String fimFileOrgName,
-                                                         @RequestParam(name = "fimSectionName") String fimSectionName,
-                                                         @RequestParam(name = "fimReferKeyId") Long fimReferKeyId) throws IOException {
-        List<FileUploadedInfoDto> fileUploadedInfoDtos = fileMngService.selectFileUploaded(fimFileCategory,
-                fimFileOrgName, fimSectionName, fimReferKeyId);
-        return fileUploadedInfoDtos;
+    @PostMapping ("/downloadMultiple")
+    public ResponseEntity<Resource> downloadFiles(@RequestBody MultipleFileDTO multipleFileDTO) {
+        try {
+            List<String> referKeys = multipleFileDTO.getFimReferKeyIdList();
+            List<String> sectionNames = multipleFileDTO.getFimSectionName();
+            Resource resource = fileMngService.prepareDownloadFiles(referKeys, sectionNames);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .contentLength(resource.getFile().length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(resource);
+        } catch (IOException e) {
+            throw new BadRequestCustomException(ApiStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
-     * 
-     * @param fileId
-     * @return
+     * Get a list of file information
+     *
+     * @return List<FileUploadedInfoDto>
+     * @throws IOException .
      */
-    @PutMapping("/fileMng")
-    public int deleteFileUploadedInfo(@RequestParam(name = "fileId") long fileId) {
-        return fileMngService.deleteFile(fileId);
+    @PostMapping ("/fileUploadedInfo")
+    public ResponseObject<List<FileUploadedInfoDto>> getFileUploadedInfo(@RequestBody FileMngDto fileDto) throws IOException {
 
+        List<FileUploadedInfoDto> fileUploadedInfoDtos = fileMngService.selectFileUploaded(fileDto);
+        return new ResponseObject<>(fileUploadedInfoDtos);
+    }
+
+    /**
+     * Delete file
+     *
+     * @param encodedFileName .
+     * @return String
+     */
+    @PutMapping ("/fileMng/{encodedFileName}")
+    public ResponseObject<String> deleteUploadedFile(@PathVariable String encodedFileName) {
+        try {
+            String deletedFileId = fileMngService.deleteUploadedFile(encodedFileName);
+
+            return new ResponseObject<>(encodedFileName);
+        } catch (FileNotFoundException e) {
+            throw new BadRequestCustomException(languageCommon.getMessageProperties("message.error.file.not.found"));
+        } catch (IOException e) {
+            throw new BadRequestCustomException(languageCommon.getMessageProperties("message.error"));
+        }
     }
 }
