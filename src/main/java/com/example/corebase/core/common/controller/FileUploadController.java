@@ -6,8 +6,10 @@ import com.example.corebase.core.common.service.FileUploadService;
 import com.example.corebase.core.common.service.dto.FileMngDto;
 import com.example.corebase.core.common.service.dto.FileUploadedInfoDto;
 import com.example.corebase.infrastructure.exception.BadRequestCustomException;
+import com.example.corebase.util.languageCommon.LanguageCommon;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping (value = {"/cmm/files"})
 @RequiredArgsConstructor
-public class FileMngController {
+public class FileUploadController {
 
     // List ALLOWED EXTENSIONS of file
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".hwp", ".hwpx", ".doc", ".docx", ".xls",
@@ -39,6 +41,9 @@ public class FileMngController {
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    @Autowired
+    private LanguageCommon languageCommon;
 
     private Path fileStorageLocation;
 
@@ -68,7 +73,7 @@ public class FileMngController {
      * @throws IOException .
      */
     @PostMapping (value = "upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<List<FileMngDto>> uploadFile(@RequestParam ("files") MultipartFile[] files,
+    public ResponseObject<List<FileMngDto>> uploadFile(@RequestParam ("files") MultipartFile[] files,
                                                     @RequestParam ("category") String category, @RequestParam ("orgName") String orgName,
                                                     @RequestParam ("sectionName") String sectionName, @RequestParam ("referKeyId") String referKeyId) throws
             IOException {
@@ -84,7 +89,7 @@ public class FileMngController {
 
             String fileExtension = getFileExtension(file.getOriginalFilename());
             if (! ALLOWED_EXTENSIONS.contains(fileExtension.toLowerCase())) {
-                throw new BadRequestCustomException(languageCommon.getMessageProperties("message.notfound")));
+                throw new BadRequestCustomException(languageCommon.getMessageProperties("message.notfound"));
             }
 
             FileMngDto fileMngDto = new FileMngDto();
@@ -94,7 +99,7 @@ public class FileMngController {
             fileRes = fileMngService.createNewFile(listFileMngDto);
         }
 
-        return new ApiResponse<>(ApiStatus.CREATED, fileRes);
+        return new ResponseObject<>(fileRes);
     }
 
     /**
@@ -108,18 +113,18 @@ public class FileMngController {
      * @throws IOException .
      */
     @PostMapping (value = "uploadEditer", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ApiResponse<FileUploadedInfoDto> uploadEditer(@RequestParam ("file") MultipartFile file,
+    public ResponseObject<FileUploadedInfoDto> uploadEditer(@RequestParam ("file") MultipartFile file,
                                                          @RequestParam ("category") String category, @RequestParam ("orgName") String orgName,
                                                          @RequestParam ("sectionName") String sectionName) throws IOException {
 
         if (file == null) {
-            throw new BadRequestCustomException(ApiStatus.BAD_REQUEST_FILE_EMPTY);
+            throw new BadRequestCustomException("message.error.file.bad.request");
         }
 
         FileMngDto fileMngDto = fileMngService.uploadFile(file, category, orgName, sectionName);
         FileUploadedInfoDto fileUploadedInfoDto = fileMngService.createEditNewFile(fileMngDto);
 
-        return new ApiResponse<>(ApiStatus.CREATED, fileUploadedInfoDto);
+        return new ResponseObject<>(fileUploadedInfoDto);
     }
 
     /**
@@ -134,7 +139,7 @@ public class FileMngController {
             IOException {
 
         if (singleFileDTO.getEncodedFileName().isEmpty()) {
-            throw new BadRequestCustomException(ApiStatus.BAD_REQUEST_FILE_EMPTY);
+            throw new BadRequestCustomException("message.error.file.empty");
         }
 
         Resource resource = fileMngService.prepareDownloadSingleFile(singleFileDTO.getEncodedFileName());
@@ -163,7 +168,7 @@ public class FileMngController {
                     .contentLength(resource.getFile().length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(resource);
         } catch (IOException e) {
-            throw new BadRequestCustomException(ApiStatus.INTERNAL_SERVER_ERROR);
+            throw new BadRequestCustomException("message.error");
         }
     }
 
