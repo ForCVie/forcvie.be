@@ -29,4 +29,6 @@ public class HelpMngEntity extends AuditEntity implements Serializable {
 
     private Integer displayOrder;
 
+    private String type;
+
 }
