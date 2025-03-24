@@ -8,7 +8,6 @@ import com.example.corebase.infrastructure.constant.SequencesConstant;
 import com.example.corebase.infrastructure.exception.BadRequestCustomException;
 import com.example.corebase.repository.common.FileMngRepository;
 import com.example.corebase.util.sequenceCommon.SequencesUtil;
-import jakarta.persistence.SequenceGenerator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,9 +149,9 @@ public class FileMngService {
                 .generateSequence(SequencesConstant.FILE_MNG.getPrefix(),
                         SequencesConstant.FILE_MNG.getTableName()));
 
-        String newPath = fileResult.getFilePath().replace(uploadPath, "files");
+        String newPath = fileResult.getFimFilePath().replace(uploadPath, "files");
         String fileUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + newPath + "/")
-                .path(fileResult.getFileName() + "." + fileMngEntity.getFileType()).toUriString();
+                .path(fileResult.getFimFileName() + "." + fileMngEntity.getFimFileExt()).toUriString();
 
         fileUploadedInfoDto.setUrlFile(fileUrl);
 
@@ -168,21 +167,21 @@ public class FileMngService {
     public List<FileUploadedInfoDto> selectFileUploaded(FileMngDto fileDto) {
 
         List<FileUploadedInfoDto> fileUploadedInfoDtos = new ArrayList<FileUploadedInfoDto>();
-        List<FileMngEntity> fileMngEntities = fileMngRepository.findByProducerIdAndProducerCodeAndDelYn(
+        List<FileMngEntity> fileMngEntities = fileMngRepository.findByFimReferKeyIdAndFimFileCategoryAndDelYn(
                 fileDto.getFimReferKeyId(), fileDto.getFimFileCategory(), Constants.STATE_N);
 
         FileUploadedInfoDto dto;
         String fileUrl;
         for (FileMngEntity fileMngEntity : fileMngEntities) {
             dto = new FileUploadedInfoDto();
-            dto.setFimFileName(fileMngEntity.getFileName());
-            dto.setId(fileMngEntity.getId());
-            dto.setFimFilePath(fileMngEntity.getFilePath());
-            String newPath = fileMngEntity.getFilePath().replace(uploadPath, "files");
+            dto.setFimFileName(fileMngEntity.getFimFileName());
+            dto.setId(fileMngEntity.getFimId());
+            dto.setFimFilePath(fileMngEntity.getFimFilePath());
+            String newPath = fileMngEntity.getFimFilePath().replace(uploadPath, "files");
             fileUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + newPath + "/")
-                    .path(fileMngEntity.getFileName() + "." + fileMngEntity.getFileType()).toUriString();
+                    .path(fileMngEntity.getFimFileName() + "." + fileMngEntity.getFimFileExt()).toUriString();
             dto.setUrlFile(fileUrl);
-            dto.setSize(fileMngEntity.getFileSize());
+            dto.setSize(fileMngEntity.getFimFileSize());
             fileUploadedInfoDtos.add(dto);
         }
 
@@ -294,7 +293,7 @@ public class FileMngService {
      */
     public FileMngDto getFilesEncodedFileName(String encodedFileName) {
 
-        FileMngEntity entity = fileMngRepository.findByFileNameAndDelYn(encodedFileName, Constants.STATE_N);
+        FileMngEntity entity = fileMngRepository.findByFimFileNameAndDelYn(encodedFileName, Constants.STATE_N);
 
         return modelMapper.map(entity, FileMngDto.class);
     }
@@ -308,7 +307,7 @@ public class FileMngService {
      */
     public List<FileMngDto> getFilesByReferKeyAndSectionName(List<String> referKeys, List<String> sectionNames) {
 
-        List<FileMngEntity> entities = fileMngRepository.findByProducerIdInAndFileNameInAndDelYn(
+        List<FileMngEntity> entities = fileMngRepository.findByFimReferKeyIdInAndFimSectionNameInAndDelYn(
                 referKeys, sectionNames, Constants.STATE_N);
 
         return entities.stream().map(entity -> modelMapper.map(entity, FileMngDto.class)).collect(Collectors.toList());
@@ -356,14 +355,14 @@ public class FileMngService {
     @Transactional
     public String deleteUploadedFile(String encodedFileName) throws IOException {
 
-        FileMngEntity entity = fileMngRepository.findByFileNameAndDelYn(encodedFileName, Constants.STATE_N);
+        FileMngEntity entity = fileMngRepository.findByFimFileNameAndDelYn(encodedFileName, Constants.STATE_N);
 
         if (entity != null) {
-            Path filePath = Paths.get(entity.getFilePath(), entity.getFileName() + "." + entity.getFileType());
+            Path filePath = Paths.get(entity.getFimFilePath(), entity.getFimFileName() + "." + entity.getFimFileExt());
             Files.deleteIfExists(filePath);
             entity.setDelYn(Constants.STATE_Y);
             fileMngRepository.save(entity);
-            return entity.getId();
+            return entity.getFimId();
         } else {
             throw new BadRequestCustomException("ApiStatus.NOT_FOUND");
         }

@@ -9,9 +9,13 @@ import java.util.List;
 @Repository
 public interface FileMngRepository extends JpaRepository<FileMngEntity, String> {
 
-    List<FileMngEntity> findByProducerIdAndProducerCodeAndDelYn(String producerId, String fileType, String delYn);
+    List<FileMngEntity> findByFimReferKeyId(String fimReferKeyId);
 
-    FileMngEntity findByFileNameAndDelYn(String fileName, String delYn);
+    FileMngEntity findByFimFileNameAndDelYn(String fimFileName, String deleteFlag);
 
-    List<FileMngEntity> findByProducerIdInAndFileNameInAndDelYn(List<String> producerIds, List<String> fileName, String delYn);
+    List<FileMngEntity> findByFimReferKeyIdAndFimFileCategoryAndDelYn(String fimReferKeyId, String fimFileCategory,
+                                                                           String deleteFlag);
+
+    List<FileMngEntity> findByFimReferKeyIdInAndFimSectionNameInAndDelYn(List<String> referKeys,
+                                                                              List<String> sectionNames, String deleteFlag);
 }
