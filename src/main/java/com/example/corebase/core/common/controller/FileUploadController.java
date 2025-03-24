@@ -2,7 +2,6 @@ package com.example.corebase.core.common.controller;
 
 import com.example.corebase.core.base.model.ResponseObject;
 import com.example.corebase.core.common.service.FileMngService;
-import com.example.corebase.core.common.service.FileUploadService;
 import com.example.corebase.core.common.service.dto.FileMngDto;
 import com.example.corebase.core.common.service.dto.FileUploadedInfoDto;
 import com.example.corebase.infrastructure.exception.BadRequestCustomException;
@@ -134,21 +133,21 @@ public class FileUploadController {
      * @return ResponseEntity<Resource> .
      * @throws IOException .
      */
-    @PostMapping ("/download")
-    public ResponseEntity<Resource> downloadFile(@RequestBody SingleFileDTO singleFileDTO) throws
-            IOException {
-
-        if (singleFileDTO.getEncodedFileName().isEmpty()) {
-            throw new BadRequestCustomException("message.error.file.empty");
-        }
-
-        Resource resource = fileMngService.prepareDownloadSingleFile(singleFileDTO.getEncodedFileName());
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .contentLength(resource.getFile().length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
-    }
+//    @PostMapping ("/download")
+//    public ResponseEntity<Resource> downloadFile(@RequestBody SingleFileDTO singleFileDTO) throws
+//            IOException {
+//
+//        if (singleFileDTO.getEncodedFileName().isEmpty()) {
+//            throw new BadRequestCustomException("message.error.file.empty");
+//        }
+//
+//        Resource resource = fileMngService.prepareDownloadSingleFile(singleFileDTO.getEncodedFileName());
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                .contentLength(resource.getFile().length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                .body(resource);
+//    }
 
     /**
      * Download multiple file
@@ -156,21 +155,21 @@ public class FileUploadController {
      * @param multipleFileDTO .
      * @return ResponseEntity<Resource>
      */
-    @PostMapping ("/downloadMultiple")
-    public ResponseEntity<Resource> downloadFiles(@RequestBody MultipleFileDTO multipleFileDTO) {
-        try {
-            List<String> referKeys = multipleFileDTO.getFimReferKeyIdList();
-            List<String> sectionNames = multipleFileDTO.getFimSectionName();
-            Resource resource = fileMngService.prepareDownloadFiles(referKeys, sectionNames);
-
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                    .contentLength(resource.getFile().length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(resource);
-        } catch (IOException e) {
-            throw new BadRequestCustomException("message.error");
-        }
-    }
+//    @PostMapping ("/downloadMultiple")
+//    public ResponseEntity<Resource> downloadFiles(@RequestBody MultipleFileDTO multipleFileDTO) {
+//        try {
+//            List<String> referKeys = multipleFileDTO.getFimReferKeyIdList();
+//            List<String> sectionNames = multipleFileDTO.getFimSectionName();
+//            Resource resource = fileMngService.prepareDownloadFiles(referKeys, sectionNames);
+//
+//            return ResponseEntity.ok()
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                    .contentLength(resource.getFile().length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                    .body(resource);
+//        } catch (IOException e) {
+//            throw new BadRequestCustomException("message.error");
+//        }
+//    }
 
     /**
      * Get a list of file information

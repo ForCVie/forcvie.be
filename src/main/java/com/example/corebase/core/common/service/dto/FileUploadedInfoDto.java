@@ -9,9 +9,10 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class FileUploadedInfoDto {
 
-    private Long id ;
+    private String id ;
     private String fimFileName ;
     private String fimFilePath ;
     private int deleteFlag ;
     private String urlFile;
+    private Long size;
 }

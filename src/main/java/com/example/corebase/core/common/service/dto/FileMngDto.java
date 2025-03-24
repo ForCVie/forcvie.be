@@ -13,7 +13,7 @@ public class FileMngDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private String fimId;
     private int fimSubFileId;
     private String fimFileCategory;
     private String fimFileName;
@@ -21,9 +21,9 @@ public class FileMngDto implements Serializable {
     private String fimFileExt;
     private long fimFileSize;
     private String fimUseYn;
-    private long fimReferKeyId;
+    private String fimReferKeyId;
     private String fimFileOrgName;
     private String fimSectionName;
-    private int deleteFlag;
+    private String deleteFlag;
 
 }

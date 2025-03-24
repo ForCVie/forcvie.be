@@ -1,6 +1,7 @@
 package com.example.corebase.core.common.service;
 
 import com.example.corebase.core.common.service.dto.FileMngDto;
+import com.example.corebase.infrastructure.constant.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -50,7 +51,7 @@ public class FileUploadService {
 
         fileMngDto.setFimFileCategory(folderName);
         fileMngDto.setFimFileName(fileName);
-        fileMngDto.setDeleteFlag(0);
+        fileMngDto.setDeleteFlag(Constants.STATE_N);
         fileMngDto.setFimFileSize(file.getSize());
         fileMngDto.setFimFileExt(fileExt[fileExt.length - 1]);
         fileMngDto.setFimFilePath(uploadDirectory);
