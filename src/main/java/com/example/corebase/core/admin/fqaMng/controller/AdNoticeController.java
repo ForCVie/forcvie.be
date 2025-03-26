@@ -19,7 +19,7 @@ public class AdNoticeController {
 
     /**
      * Get Page Notice
-     * @api /a/notice/list
+     * @api /a/fqa/notice/list
      * @param req
      * @return
      */
@@ -30,7 +30,7 @@ public class AdNoticeController {
 
     /**
      * Get Detail Notice
-     * @api /a/notice/detail
+     * @api /a/fqa/notice/detail
      * @param req
      * @return
      */
@@ -41,7 +41,7 @@ public class AdNoticeController {
 
     /**
      * Save Notice
-     * @api /a/notice/save
+     * @api /a/fqa/notice/save
      * @param req
      * @return
      */
@@ -52,7 +52,7 @@ public class AdNoticeController {
 
     /**
      * Save Notice
-     * @api /a/notice/remove
+     * @api /a/fqa/notice/remove
      * @param req
      * @return
      */
@@ -63,7 +63,7 @@ public class AdNoticeController {
 
     /**
      * Up Notice
-     * @api /a/notice/set-up
+     * @api /a/fqa/notice/set-up
      * @param req
      * @return
      */
@@ -74,12 +74,23 @@ public class AdNoticeController {
 
     /**
      * Down Notice
-     * @api /a/notice/set-down
+     * @api /a/fqa/notice/set-down
      * @param req
      * @return
      */
     @PostMapping("/set-down")
     public ResponseObject setNoticeDown(@RequestBody String req) {
         return new ResponseObject(service.setNoticeDown(req));
+    }
+
+    /**
+     * Get Data Form Notice
+     * @api /a/fqa/notice/form
+     * @param
+     * @return
+     */
+    @PostMapping("/form")
+    public ResponseObject getDataForm() {
+        return new ResponseObject(service.getFormData());
     }
 }

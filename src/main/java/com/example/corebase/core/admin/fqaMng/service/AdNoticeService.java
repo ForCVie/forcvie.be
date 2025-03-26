@@ -1,6 +1,7 @@
 package com.example.corebase.core.admin.fqaMng.service;
 
 import com.example.corebase.core.admin.fqaMng.model.dto.AdNoticeDetailDTO;
+import com.example.corebase.core.admin.fqaMng.model.dto.AdNoticeFormDTO;
 import com.example.corebase.core.admin.fqaMng.model.dto.AdNoticeResDTO;
 import com.example.corebase.core.admin.fqaMng.model.request.AdNoticeFilterReq;
 import com.example.corebase.core.admin.fqaMng.model.request.AdNoticeReq;
@@ -19,4 +20,6 @@ public interface AdNoticeService {
     Boolean setNoticeUp(String id);
 
     Boolean setNoticeDown(String id);
+
+    AdNoticeFormDTO getFormData();
 }
