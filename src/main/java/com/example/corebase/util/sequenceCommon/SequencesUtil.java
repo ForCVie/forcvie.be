@@ -22,21 +22,21 @@ public class SequencesUtil {
     public String generateSequence(String prefix, String tableName) {
         String resultSeq = null;
         try (Connection connection = dataSource.getConnection()) {
-            String selectQuery = "SELECT LAST_NUM FROM CPS_SEQ_MNG WHERE TBL_NAME = ?";
+            String selectQuery = "SELECT last_num FROM cps_seq_mng WHERE tbl_name = ?";
             PreparedStatement selectStmt = connection.prepareStatement(selectQuery);
             selectStmt.setString(1, tableName);
             ResultSet rs = selectStmt.executeQuery();
 
             if (rs.next()) {
-                long lastNum = rs.getLong("LAST_NUM") + 1;
-                String updateQuery = "UPDATE CPS_SEQ_MNG SET LAST_NUM = ? WHERE TBL_NAME = ?";
+                long lastNum = rs.getLong("last_num") + 1;
+                String updateQuery = "UPDATE cps_seq_mng SET last_num = ? WHERE tbl_name = ?";
                 PreparedStatement updateStmt = connection.prepareStatement(updateQuery);
                 updateStmt.setLong(1, lastNum);
                 updateStmt.setString(2, tableName);
                 updateStmt.executeUpdate();
                 resultSeq = prefix + String.format("%015d", lastNum);
             } else {
-                String insertQuery = "INSERT INTO CPS_SEQ_MNG (TBL_NAME, LAST_NUM, PREFIX) VALUES (?, 1, ?)";
+                String insertQuery = "INSERT INTO cps_seq_mng (tbl_name, last_num, prefix) VALUES (?, 1, ?)";
                 PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
                 insertStmt.setString(1, tableName);
                 insertStmt.setString(2, prefix);
