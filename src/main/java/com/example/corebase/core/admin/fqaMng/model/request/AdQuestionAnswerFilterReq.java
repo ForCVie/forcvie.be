@@ -12,5 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AdQuestionAnswerFilterReq extends PageableRequest {
 
+    private String title;
+
+    private String userQuestion;
+
     private String userAnswer;
+
+    private String status;
 }

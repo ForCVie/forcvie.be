@@ -9,6 +9,4 @@ public interface AdNoticeResponse {
     String getPostCd();
 
     String getTopFixCd();
-
-    String getRoleId();
 }

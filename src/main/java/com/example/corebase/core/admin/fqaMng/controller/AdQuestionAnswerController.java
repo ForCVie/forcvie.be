@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/a/question-answer")
+@RequestMapping("/a/fqa/question-answer")
 public class AdQuestionAnswerController {
 
     @Autowired
@@ -19,7 +19,7 @@ public class AdQuestionAnswerController {
 
     /**
      * Get Page Question
-     * @api /a/question-answer/list
+     * @api /a/fqa/question-answer/list
      * @param req
      * @return
      */
@@ -30,7 +30,7 @@ public class AdQuestionAnswerController {
 
     /**
      * Get Detail Question
-     * @api /a/question-answer/detail
+     * @api /a/fqa/question-answer/detail
      * @param req
      * @return
      */
@@ -41,7 +41,7 @@ public class AdQuestionAnswerController {
 
     /**
      * Answer Question
-     * @api /a/question-answer/answer
+     * @api /a/fqa/question-answer/answer
      * @param req
      * @return
      */
@@ -52,7 +52,7 @@ public class AdQuestionAnswerController {
 
     /**
      * Reject Question
-     * @api /a/question-answer/reject
+     * @api /a/fqa/question-answer/reject
      * @param req
      * @return
      */
