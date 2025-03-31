@@ -8,7 +8,7 @@ import com.example.corebase.core.admin.fqaMng.model.request.AdQuestionAnswerReq;
 import com.example.corebase.core.admin.fqaMng.repository.AdQuestionAnswerRepository;
 import com.example.corebase.core.admin.fqaMng.service.AdQuestionAnswerService;
 import com.example.corebase.core.base.model.PageableObject;
-import com.example.corebase.entity.QAEntity;
+import com.example.corebase.entity.fqa.QAEntity;
 import com.example.corebase.infrastructure.constant.Constants;
 import com.example.corebase.infrastructure.exception.BadRequestCustomException;
 import com.example.corebase.util.languageCommon.LanguageCommon;

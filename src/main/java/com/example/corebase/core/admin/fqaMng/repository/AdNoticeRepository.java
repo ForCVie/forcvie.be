@@ -2,7 +2,7 @@ package com.example.corebase.core.admin.fqaMng.repository;
 
 import com.example.corebase.core.admin.fqaMng.model.request.AdNoticeFilterReq;
 import com.example.corebase.core.admin.fqaMng.model.response.AdNoticeResponse;
-import com.example.corebase.repository.NoticeRepository;
+import com.example.corebase.repository.fqa.NoticeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

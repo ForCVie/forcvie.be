@@ -10,7 +10,7 @@ import com.example.corebase.core.admin.fqaMng.repository.AdNoticeRepository;
 import com.example.corebase.core.admin.fqaMng.service.AdNoticeService;
 import com.example.corebase.core.base.model.PageableObject;
 import com.example.corebase.core.common.service.dto.CodeMngDTO;
-import com.example.corebase.entity.NoticeEntity;
+import com.example.corebase.entity.fqa.NoticeEntity;
 import com.example.corebase.infrastructure.constant.Constants;
 import com.example.corebase.infrastructure.constant.SequencesConstant;
 import com.example.corebase.infrastructure.exception.BadRequestCustomException;

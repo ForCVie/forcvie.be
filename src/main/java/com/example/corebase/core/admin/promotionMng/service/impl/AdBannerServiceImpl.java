@@ -8,7 +8,7 @@ import com.example.corebase.core.admin.promotionMng.model.request.AdBannerReq;
 import com.example.corebase.core.admin.promotionMng.repository.AdBannerRepository;
 import com.example.corebase.core.admin.promotionMng.service.AdBannerService;
 import com.example.corebase.core.base.model.PageableObject;
-import com.example.corebase.entity.BannerEntity;
+import com.example.corebase.entity.promotional.BannerEntity;
 import com.example.corebase.infrastructure.constant.Constants;
 import com.example.corebase.infrastructure.constant.SequencesConstant;
 import com.example.corebase.infrastructure.exception.BadRequestCustomException;
