@@ -18,4 +18,6 @@ public class AdBannerResDTO {
     private String useYn;
 
     private String url;
+
+    private String typeNm;
 }

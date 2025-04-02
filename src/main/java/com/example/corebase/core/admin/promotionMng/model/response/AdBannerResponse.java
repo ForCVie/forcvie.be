@@ -9,4 +9,6 @@ public interface AdBannerResponse {
     String getUseYn();
 
     String getUrl();
+
+    String getTypeNm();
 }

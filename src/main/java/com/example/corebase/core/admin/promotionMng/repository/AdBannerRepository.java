@@ -21,10 +21,14 @@ public interface AdBannerRepository extends BannerRepository {
             b.banner_seq, 
             b.banner_nm,
             b.use_yn,
-            b.url
+            b.url,
+            FN_GET_CODE_NAME(b.banner_type) as typeNm
         FROM banner b
         WHERE b.del_yn = :#{#con.delYn} 
         AND (:#{#req.typeCd} IS NULL OR b.banner_type LIKE CONCAT('%', :#{#req.typeCd}, '%'))
+        AND (:#{#req.bannerNm} IS NULL OR b.banner_nm LIKE CONCAT('%', :#{#req.bannerNm}, '%'))
+        AND (:#{#req.useYn} IS NULL OR b.use_yn LIKE CONCAT('%', :#{#req.useYn}, '%'))
+        AND (:#{#req.url} IS NULL OR b.url LIKE CONCAT('%', :#{#req.url}, '%'))
     """, nativeQuery = true)
     Page<AdBannerResponse> getPageAdBanner(@Param("req") AdBannerFilterReq req, @Param("con") AdBannerConDTO con, Pageable pageable);
 

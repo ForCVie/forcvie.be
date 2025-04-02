@@ -13,4 +13,10 @@ import lombok.Setter;
 public class AdBannerFilterReq extends PageableRequest {
 
     private String typeCd;
+
+    private String bannerNm;
+
+    private String useYn;
+
+    private String url;
 }
