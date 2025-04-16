@@ -9,17 +9,5 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdBannerTeeResDTO {
-
-    private String bannerTeeSeq;
-
-    private String title;
-
-    private String url;
-
-    private String useYn;
-
-    private String startDate;
-
-    private String endDate;
+public class AdPopupNoticeResDTO {
 }

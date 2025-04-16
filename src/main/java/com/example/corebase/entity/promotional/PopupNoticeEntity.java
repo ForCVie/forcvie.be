@@ -27,6 +27,8 @@ public class PopupNoticeEntity extends AuditEntity implements Serializable {
 
     private String url;
 
+    private String useYn;
+
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
