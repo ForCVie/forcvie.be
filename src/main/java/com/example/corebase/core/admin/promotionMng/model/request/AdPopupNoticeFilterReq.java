@@ -1,5 +1,6 @@
 package com.example.corebase.core.admin.promotionMng.model.request;
 
+import com.example.corebase.core.base.model.PageableRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdPopupNoticeFilterReq {
+public class AdPopupNoticeFilterReq extends PageableRequest {
 
     private String title;
 

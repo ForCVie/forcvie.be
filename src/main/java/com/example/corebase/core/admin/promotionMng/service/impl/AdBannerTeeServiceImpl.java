@@ -60,8 +60,8 @@ public class AdBannerTeeServiceImpl implements AdBannerTeeService {
 
         if (StringUtils.isEmpty(bannerEntity.getBannerTeeSeq())) {
             bannerEntity.setBannerTeeSeq(sequencesUtil
-                    .generateSequence(SequencesConstant.BANNER.getPrefix(),
-                            SequencesConstant.BANNER.getTableName()));
+                    .generateSequence(SequencesConstant.BANNER_TEE.getPrefix(),
+                            SequencesConstant.BANNER_TEE.getTableName()));
         }
         repository.save(bannerEntity);
         return true;

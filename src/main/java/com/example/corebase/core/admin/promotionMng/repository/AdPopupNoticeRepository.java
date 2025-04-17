@@ -1,8 +1,10 @@
 package com.example.corebase.core.admin.promotionMng.repository;
 
 import com.example.corebase.core.admin.promotionMng.model.dto.AdPopupNoticeConDTO;
+import com.example.corebase.core.admin.promotionMng.model.dto.AdPopupNoticeResDTO;
 import com.example.corebase.core.admin.promotionMng.model.request.AdPopupNoticeFilterReq;
 import com.example.corebase.core.admin.promotionMng.model.response.AdBannerTeeResponse;
+import com.example.corebase.core.admin.promotionMng.model.response.AdPopupNoticeResponse;
 import com.example.corebase.entity.promotional.PopupNoticeEntity;
 import com.example.corebase.repository.promotional.PopupNoticeRepository;
 import org.springframework.data.domain.Page;
@@ -32,7 +34,7 @@ public interface AdPopupNoticeRepository extends PopupNoticeRepository {
         AND (:#{#req.startDate} IS NULL OR :#{#req.startDate} = '' OR b.start_date >= :#{#req.startDate})
         AND (:#{#req.endDate} IS NULL OR :#{#req.endDate} = '' OR b.end_date <= :#{#req.endDate})
     """, nativeQuery = true)
-    Page<AdBannerTeeResponse> getPagePopupNotice(@Param("req") AdPopupNoticeFilterReq req, @Param("con") AdPopupNoticeConDTO con, Pageable pageable);
+    Page<AdPopupNoticeResponse> getPagePopupNotice(@Param("req") AdPopupNoticeFilterReq req, @Param("con") AdPopupNoticeConDTO con, Pageable pageable);
 
-    Optional<PopupNoticeEntity> findByPopupNoticeSeq(String id, String delYn);
+    Optional<PopupNoticeEntity> findByPopupNoticeSeqAndDelYn(String id, String delYn);
 }

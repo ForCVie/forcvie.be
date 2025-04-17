@@ -10,4 +10,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdPopupNoticeResDTO {
+
+    private String popupNoticeSeq;
+
+    private String title;
+
+    private String url;
+
+    private String useYn;
+
+    private String startDate;
+
+    private String endDate;
 }

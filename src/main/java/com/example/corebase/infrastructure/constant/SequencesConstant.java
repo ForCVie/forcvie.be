@@ -8,6 +8,8 @@ public enum SequencesConstant {
     SYS_ROLE_MNG("sys_role", "RL"),
     MENU_ROLE("menu_role", "MR"),
     BANNER("banner", "BAN"),
+    BANNER_TEE("banner_tee", "BAN"),
+    POPUP_NOTICE("popup_notice", "BAN"),
     NOTICE("notice", "NO"),
     TABLE_THREE("TBL_THREE", "T3");
 
