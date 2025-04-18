@@ -51,8 +51,8 @@ public class AdBannerTeeController {
      * @return
      */
     @PostMapping("/save")
-    public ResponseObject<Boolean> saveData(@RequestBody AdBannerTeeReq req) {
-        return new ResponseObject<Boolean>(service.saveData(req));
+    public ResponseObject<String> saveData(@RequestBody AdBannerTeeReq req) {
+        return new ResponseObject<String>(service.saveData(req));
     }
 
     /**

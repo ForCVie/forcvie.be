@@ -12,7 +12,7 @@ public interface AdBannerTeeService {
 
     AdBannerTeeDetailDTO getDataDetail(String id);
 
-    Boolean saveData(AdBannerTeeReq req);
+    String saveData(AdBannerTeeReq req);
 
     Boolean removeData(String id);
 }

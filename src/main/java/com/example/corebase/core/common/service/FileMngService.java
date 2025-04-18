@@ -182,6 +182,7 @@ public class FileMngService {
                     .path(fileMngEntity.getFimFileName() + "." + fileMngEntity.getFimFileExt()).toUriString();
             dto.setUrlFile(fileUrl);
             dto.setSize(fileMngEntity.getFimFileSize());
+            dto.setFimOrgName(fileMngEntity.getFimFileOrgName());
             fileUploadedInfoDtos.add(dto);
         }
 

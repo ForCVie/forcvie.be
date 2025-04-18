@@ -11,6 +11,7 @@ public class FileUploadedInfoDto {
 
     private String id ;
     private String fimFileName ;
+    private String fimOrgName;
     private String fimFilePath ;
     private int deleteFlag ;
     private String urlFile;

@@ -55,7 +55,7 @@ public class AdBannerTeeServiceImpl implements AdBannerTeeService {
 
     @Override
     @Transactional
-    public Boolean saveData(AdBannerTeeReq req) {
+    public String saveData(AdBannerTeeReq req) {
         BannerTeeEntity bannerEntity = modelMapper.map(req, BannerTeeEntity.class);
 
         if (StringUtils.isEmpty(bannerEntity.getBannerTeeSeq())) {
@@ -64,7 +64,7 @@ public class AdBannerTeeServiceImpl implements AdBannerTeeService {
                             SequencesConstant.BANNER_TEE.getTableName()));
         }
         repository.save(bannerEntity);
-        return true;
+        return bannerEntity.getBannerTeeSeq();
     }
 
     @Override

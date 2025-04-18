@@ -18,12 +18,12 @@ public interface AdBannerTeeRepository extends BannerTeeRepository {
 
     @Query(value = """
         SELECT 
-            b.banner_tee_seq,
+            b.banner_tee_seq as bannerTeeSeq,
             b.title,
             b.url,
             FN_GET_CODE_NAME(b.use_yn) as useYn,
-            b.start_date,
-            b.end_date
+            b.start_date as startDate,
+            b.end_date as endDate
         FROM banner_tee b
         WHERE b.del_yn = :#{#con.delYn} 
         AND (:#{#req.title} IS NULL OR b.title LIKE CONCAT('%', :#{#req.title}, '%'))

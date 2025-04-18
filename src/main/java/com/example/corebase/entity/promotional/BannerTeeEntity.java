@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Table(name = "banner_tee")
 @Getter
@@ -31,7 +31,7 @@ public class BannerTeeEntity extends AuditEntity implements Serializable {
 
     private String useYn;
 
-    private LocalDateTime startDate;
+    private Date startDate;
 
-    private LocalDateTime endDate;
+    private Date endDate;
 }
