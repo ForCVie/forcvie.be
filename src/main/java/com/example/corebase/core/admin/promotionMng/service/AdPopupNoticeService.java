@@ -12,7 +12,7 @@ public interface AdPopupNoticeService {
 
     AdPopupNoticeDetailDTO getDataDetail(String id);
 
-    Boolean saveData(AdPopupNoticeReq req);
+    String saveData(AdPopupNoticeReq req);
 
     Boolean removeData(String id);
 }

@@ -12,7 +12,7 @@ public interface AdBannerService {
 
     AdBannerDetailDTO getDataDetail(String id);
 
-    Boolean saveData(AdBannerReq req);
+    String saveData(AdBannerReq req);
 
     Boolean removeData(String id);
 }

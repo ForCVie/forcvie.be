@@ -1,9 +1,7 @@
 package com.example.corebase.core.admin.promotionMng.repository;
 
 import com.example.corebase.core.admin.promotionMng.model.dto.AdPopupNoticeConDTO;
-import com.example.corebase.core.admin.promotionMng.model.dto.AdPopupNoticeResDTO;
 import com.example.corebase.core.admin.promotionMng.model.request.AdPopupNoticeFilterReq;
-import com.example.corebase.core.admin.promotionMng.model.response.AdBannerTeeResponse;
 import com.example.corebase.core.admin.promotionMng.model.response.AdPopupNoticeResponse;
 import com.example.corebase.entity.promotional.PopupNoticeEntity;
 import com.example.corebase.repository.promotional.PopupNoticeRepository;
@@ -20,12 +18,12 @@ public interface AdPopupNoticeRepository extends PopupNoticeRepository {
 
     @Query(value = """
         SELECT 
-            b.popup_notice_seq,
+            b.popup_notice_seq as popupNoticeSeq,
             b.title,
             b.url,
             FN_GET_CODE_NAME(b.use_yn) as useYn,
-            b.start_date,
-            b.end_date
+            b.start_date as startDate,
+            b.end_date as endDate
         FROM popup_notice b
         WHERE b.del_yn = :#{#con.delYn} 
         AND (:#{#req.title} IS NULL OR b.title LIKE CONCAT('%', :#{#req.title}, '%'))

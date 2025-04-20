@@ -1,8 +1,5 @@
 package com.example.corebase.core.admin.promotionMng.service.impl;
 
-import com.example.corebase.core.admin.promotionMng.model.dto.AdBannerTeeConDTO;
-import com.example.corebase.core.admin.promotionMng.model.dto.AdBannerTeeDetailDTO;
-import com.example.corebase.core.admin.promotionMng.model.dto.AdBannerTeeResDTO;
 import com.example.corebase.core.admin.promotionMng.model.dto.AdPopupNoticeConDTO;
 import com.example.corebase.core.admin.promotionMng.model.dto.AdPopupNoticeDetailDTO;
 import com.example.corebase.core.admin.promotionMng.model.dto.AdPopupNoticeResDTO;
@@ -11,7 +8,6 @@ import com.example.corebase.core.admin.promotionMng.model.request.AdPopupNoticeR
 import com.example.corebase.core.admin.promotionMng.repository.AdPopupNoticeRepository;
 import com.example.corebase.core.admin.promotionMng.service.AdPopupNoticeService;
 import com.example.corebase.core.base.model.PageableObject;
-import com.example.corebase.entity.promotional.BannerTeeEntity;
 import com.example.corebase.entity.promotional.PopupNoticeEntity;
 import com.example.corebase.infrastructure.constant.Constants;
 import com.example.corebase.infrastructure.constant.SequencesConstant;
@@ -59,7 +55,7 @@ public class AdPopupNoticeServiceImpl implements AdPopupNoticeService {
 
     @Override
     @Transactional
-    public Boolean saveData(AdPopupNoticeReq req) {
+    public String saveData(AdPopupNoticeReq req) {
         PopupNoticeEntity popupNoticeEntity = modelMapper.map(req, PopupNoticeEntity.class);
 
         if (StringUtils.isEmpty(popupNoticeEntity.getPopupNoticeSeq())) {
@@ -68,7 +64,7 @@ public class AdPopupNoticeServiceImpl implements AdPopupNoticeService {
                             SequencesConstant.POPUP_NOTICE.getTableName()));
         }
         repository.save(popupNoticeEntity);
-        return true;
+        return popupNoticeEntity.getPopupNoticeSeq();
     }
 
     @Override

@@ -55,7 +55,7 @@ public class AdBannerServiceImpl implements AdBannerService {
 
     @Override
     @Transactional
-    public Boolean saveData(AdBannerReq req) {
+    public String saveData(AdBannerReq req) {
         BannerEntity bannerEntity = modelMapper.map(req, BannerEntity.class);
 
         if (StringUtils.isEmpty(bannerEntity.getBannerSeq())) {
@@ -64,7 +64,7 @@ public class AdBannerServiceImpl implements AdBannerService {
                             SequencesConstant.BANNER.getTableName()));
         }
         repository.save(bannerEntity);
-        return true;
+        return bannerEntity.getBannerSeq();
     }
 
     @Override
