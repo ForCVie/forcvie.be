@@ -4,5 +4,5 @@ import com.example.corebase.repository.auth.UserRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FoodOwnerRepository extends UserRepository {
+public interface AdFoodOwnerRepository extends UserRepository {
 }

@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/account-creation/food-owner")
-public class FoodOwnerController {
+public class AdFoodOwnerController {
 }
