@@ -12,6 +12,7 @@ import com.example.corebase.repository.auth.UserRepository;
 import com.example.corebase.util.languageCommon.LanguageCommon;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,6 +37,7 @@ public class AuthService {
     private LanguageCommon languageCommon;
 
     @Autowired
+    @Qualifier(UserRepository.USER_REPOSITORY_NAME)
     private UserRepository usersRepository;
 
     @Autowired
