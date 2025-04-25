@@ -1,4 +1,6 @@
 package com.example.corebase.core.admin.accountCreation.repository;
 
-public class AdClientMngRepository {
+import com.example.corebase.repository.auth.UserRepository;
+
+public interface AdClientMngRepository extends UserRepository {
 }
