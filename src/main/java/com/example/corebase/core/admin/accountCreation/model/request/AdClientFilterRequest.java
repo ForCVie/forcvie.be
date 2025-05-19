@@ -1,4 +1,18 @@
 package com.example.corebase.core.admin.accountCreation.model.request;
 
-public class AdClientFilterRequest {
+import com.example.corebase.core.base.model.PageableRequest;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AdClientFilterRequest extends PageableRequest {
+
+    private String userName;
+
+    private String fullName;
 }

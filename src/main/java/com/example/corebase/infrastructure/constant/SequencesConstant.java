@@ -11,6 +11,10 @@ public enum SequencesConstant {
     BANNER_TEE("banner_tee", "BAN"),
     POPUP_NOTICE("popup_notice", "BAN"),
     NOTICE("notice", "NO"),
+    STAFF_MNG("staff_mng", "ST"),
+    USER_MNG("user_mng", "CL"),
+    OWNER_MNG("owner_mng", "ON"),
+    FOOD_STORE("food_store", "FS"),
     TABLE_THREE("TBL_THREE", "T3");
 
     private final String tableName;
