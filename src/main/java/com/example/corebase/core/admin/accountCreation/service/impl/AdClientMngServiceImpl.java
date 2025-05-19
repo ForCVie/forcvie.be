@@ -14,6 +14,7 @@ import com.example.corebase.infrastructure.exception.BadRequestCustomException;
 import com.example.corebase.util.languageCommon.LanguageCommon;
 import com.example.corebase.util.pageCommon.PageableCommon;
 import com.example.corebase.util.sequenceCommon.SequencesUtil;
+import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class AdClientMngServiceImpl implements AdClientMngService {
     }
 
     @Override
+    @Transactional
     public Boolean saveData(AdClientMngRequest req) {
         UserEntity userEntity = modelMapper.map(req, UserEntity.class);
 
@@ -66,6 +68,7 @@ public class AdClientMngServiceImpl implements AdClientMngService {
     }
 
     @Override
+    @Transactional
     public Boolean removeData(String id) {
         UserEntity userEntity = repository.findById(id)
                 .orElseThrow(() -> new BadRequestCustomException(languageCommon.getMessageProperties("message.notfound")));

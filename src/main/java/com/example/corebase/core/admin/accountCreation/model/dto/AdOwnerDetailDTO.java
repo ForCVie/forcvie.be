@@ -13,6 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class AdOwnerDetailDTO {
 
+    private String id;
+
     private String userName;
 
     private String password;

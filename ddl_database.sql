@@ -727,6 +727,33 @@ CREATE TABLE user_mng
 );
 
 
+-- test.owner_mng definition
+
+-- Drop table
+
+-- DROP TABLE owner_mng;
+
+CREATE TABLE owner_mng
+(
+    created_date       DATETIME,
+    last_modified_date DATETIME,
+    address            VARCHAR(255),
+    avatar             VARCHAR(255),
+    created_by         VARCHAR(255),
+    `date`             VARCHAR(255),
+    del_yn             VARCHAR(255),
+    email              VARCHAR(255),
+    full_name          VARCHAR(255),
+    id                 VARCHAR(255) NOT NULL,
+    last_modified_by   VARCHAR(255),
+    nationality        VARCHAR(255),
+    password           VARCHAR(255),
+    phone              VARCHAR(255),
+    user_name          VARCHAR(255),
+    CONSTRAINT `PRIMARY` PRIMARY KEY (id)
+);
+
+
 -- test.voucher definition
 
 -- Drop table

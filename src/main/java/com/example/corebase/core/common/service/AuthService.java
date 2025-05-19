@@ -41,6 +41,7 @@ public class AuthService {
     private UserRepository usersRepository;
 
     @Autowired
+    @Qualifier(StaffRepository.STAFF_REPOSITORY)
     private StaffRepository staffEntityRepository;
 
     public String adminLogin(LoginRequest request) {
