@@ -22,6 +22,8 @@ public class FoodStrEntity extends AuditEntity implements Serializable {
     @Id
     private String foodStoreSeq;
 
+    private String code;
+
     private String nm;
 
     private String ownerSeq;
