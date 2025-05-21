@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface AdClientMngRepository extends UserRepository {
 
-    Page<UserEntity> findByUserNameContainsAndDelYn(String userName, String delYn, Pageable pageable);
+    Page<UserEntity> findByUserNameContainsAndFullNameContainsAndDelYn(String userName, String fullName, String delYn, Pageable pageable);
 }

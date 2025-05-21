@@ -14,6 +14,7 @@ import com.example.corebase.entity.orderFood.FoodStrEntity;
 import com.example.corebase.infrastructure.constant.Constants;
 import com.example.corebase.infrastructure.constant.SequencesConstant;
 import com.example.corebase.infrastructure.exception.BadRequestCustomException;
+import com.example.corebase.util.codeGenerator.CodeGenerator;
 import com.example.corebase.util.languageCommon.LanguageCommon;
 import com.example.corebase.util.pageCommon.PageableCommon;
 import com.example.corebase.util.sequenceCommon.SequencesUtil;
@@ -77,7 +78,10 @@ public class AdOwnerServiceImpl implements AdOwnerService {
             entity.setId(sequencesUtil
                     .generateSequence(SequencesConstant.OWNER_MNG.getPrefix(),
                             SequencesConstant.OWNER_MNG.getTableName()));
+            entity.setLockYn(Constants.STATE_N);
+            entity.setUserName(CodeGenerator.generateCode(Constants.CODE_OWNER, 10));
         }
+        entity.setDelYn(Constants.STATE_N);
 
         if (req.getFoodStores().isEmpty()) {
             if (StringUtils.isEmpty(req.getId())) {

@@ -14,6 +14,7 @@ public enum SequencesConstant {
     STAFF_MNG("staff_mng", "ST"),
     USER_MNG("user_mng", "CL"),
     OWNER_MNG("owner_mng", "ON"),
+    USER_ADDRESS_MNG("user_address", "UA"),
     FOOD_STORE("food_store", "FS"),
     TABLE_THREE("TBL_THREE", "T3");
 

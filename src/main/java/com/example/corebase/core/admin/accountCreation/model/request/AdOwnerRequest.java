@@ -33,5 +33,7 @@ public class AdOwnerRequest {
 
     private String avatar;
 
+    private String lockYn;
+
     private List<AdFoodStoreRequest> foodStores;
 }

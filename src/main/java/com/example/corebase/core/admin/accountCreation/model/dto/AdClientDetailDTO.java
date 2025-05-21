@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,4 +32,8 @@ public class AdClientDetailDTO {
     private String nationality;
 
     private String avatar;
+
+    private String lockYn;
+
+    private List<AdUserAddressDTO> listAddress;
 }

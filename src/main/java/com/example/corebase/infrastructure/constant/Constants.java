@@ -20,6 +20,9 @@ public class Constants {
     public static final String ROLE_STAFF = "10220";
     public static final String ROLE_CLIENT = "10230";
 
+    public static final String CODE_CLIENT = "KH";
+    public static final String CODE_OWNER = "FS";
+
     public static final String STATE_Y = "Y";
     public static final String STATE_N = "N";
     public static final String BANNER_TYPE_HOME = "BANNER_TYPE_HOME";

@@ -1,7 +1,9 @@
 package com.example.corebase.entity.auth;
 
+import com.example.corebase.entity.base.AuditEntity;
 import com.example.corebase.entity.base.PrimaryBase;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +18,10 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @DynamicUpdate
 @Table(name = "USER_MNG")
-public class UserEntity extends PrimaryBase {
+public class UserEntity extends AuditEntity {
+
+    @Id
+    private String id;
 
     private String userName;
 
@@ -35,4 +40,6 @@ public class UserEntity extends PrimaryBase {
     private String nationality;
 
     private String avatar;
+
+    private String lockYn;
 }

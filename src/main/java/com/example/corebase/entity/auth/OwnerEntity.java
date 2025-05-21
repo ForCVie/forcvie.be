@@ -35,4 +35,6 @@ public class OwnerEntity extends PrimaryBase {
     private String nationality;
 
     private String avatar;
+
+    private String lockYn;
 }

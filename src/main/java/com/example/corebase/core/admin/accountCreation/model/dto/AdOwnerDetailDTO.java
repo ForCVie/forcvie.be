@@ -33,5 +33,7 @@ public class AdOwnerDetailDTO {
 
     private String avatar;
 
+    private String lockYn;
+
     private List<AdFoodStoreDetailDTO> foodStores;
 }

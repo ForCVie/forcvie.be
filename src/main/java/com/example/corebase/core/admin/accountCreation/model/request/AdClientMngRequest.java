@@ -1,9 +1,12 @@
 package com.example.corebase.core.admin.accountCreation.model.request;
 
+import com.example.corebase.core.admin.accountCreation.model.dto.AdUserAddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,4 +33,8 @@ public class AdClientMngRequest {
     private String nationality;
 
     private String avatar;
+
+    private String lockYn;
+
+    private List<AdUserAddressDTO> listAddress;
 }
