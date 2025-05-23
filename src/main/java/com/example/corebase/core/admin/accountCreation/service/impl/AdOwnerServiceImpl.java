@@ -95,11 +95,12 @@ public class AdOwnerServiceImpl implements AdOwnerService {
                 FoodStrEntity store = modelMapper.map(item, FoodStrEntity.class);
 
                 store.setOwnerSeq(entity.getId());
-
+                store.setDelYn(Constants.STATE_N);
                 if (StringUtils.isEmpty(store.getFoodStoreSeq())) {
                     store.setFoodStoreSeq(sequencesUtil
                             .generateSequence(SequencesConstant.FOOD_STORE.getPrefix(),
                                     SequencesConstant.FOOD_STORE.getTableName()));
+                    store.setCode(CodeGenerator.generateCode(Constants.FOOD_STORE, 10));
                 } else {
                     listStoreIns.add(store.getFoodStoreSeq());
                 }

@@ -13,8 +13,6 @@ public class AdFoodStoreRequest {
 
     private String foodStoreSeq;
 
-    private String code;
-
     private String nm;
 
     private String ownerSeq;

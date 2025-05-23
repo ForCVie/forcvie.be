@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@DynamicUpdate
 public class FoodStrEntity extends AuditEntity implements Serializable {
 
     @Id

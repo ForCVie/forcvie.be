@@ -22,6 +22,7 @@ public class Constants {
 
     public static final String CODE_CLIENT = "KH";
     public static final String CODE_OWNER = "FS";
+    public static final String FOOD_STORE = "ST";
 
     public static final String STATE_Y = "Y";
     public static final String STATE_N = "N";
